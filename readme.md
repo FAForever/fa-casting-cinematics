@@ -22,7 +22,9 @@
 
 # Cinematics - Live Camera Control
 
-This UI mods adds hotkeys that you can use to have cinematic-level control over your camera. It allows you to control both (when in split screen, but not necessary) world views via hotkeys. Please review the [Configuration file](./src/Config.lua) to understand what hotkeys exist and how they behave.
+This UI mods adds hotkeys that you can use to have cinematic-level control over your camera. It allows you to control both (when in split screen, but not necessary) world views via hotkeys. 
+
+Please review the [Configuration file](./src/Config.lua) to understand what hotkeys exist and how they behave.
 
 https://github.com/user-attachments/assets/cbaf38c0-aaa1-4bd9-b5c9-b9f68e1c4662
 
