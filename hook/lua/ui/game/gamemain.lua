@@ -28,22 +28,12 @@ do
     function CreateUI(isReplay)
         baseCreateUI(isReplay)
 
-        -- requires assembly patches to work:
-        -- - https://github.com/FAForever/FA-Binary-Patches/pull/65
-        -- - https://github.com/FAForever/FA-Binary-Patches/commit/80c1e9f849ca842a53917d52cdb7cdb1dd1d056c
-        if not rawget(_G, "GetHighlightCommand") then
-            print("Gesture detection is disabled")
-            WARN("Missing global `GetHighlightCommand` that was introduced by https://github.com/FAForever/FA-Binary-Patches/pull/65")
+        -- only apply hotkeys when that makes sense
+        local config = import("/mods/fa-casting-cinematics/src/Config.lua")
+
+        if config.ShouldApplyKeys() then
+            config.ApplyDefaultKeyLayout()
             return
         end
-
-        local version = tonumber(import("/lua/version.lua").GetVersion())
-        if (not version) or version <= 3813 then
-            print("Gesture detection is disabled")
-            WARN("Invalid game version - expects at least game version 3813 from the FAForever community.")
-        end
-
-        -- run the module
-        import("/mods/fa-gesture-delete-command/src/gesture-delete-command.lua").StartGestureDetectionThread()
     end
 end
