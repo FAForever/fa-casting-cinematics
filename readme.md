@@ -20,23 +20,9 @@
   
 </div>
 
-# Gesture to delete commands
+# Cinematics - Live Camera Control
 
-This UI mod adds a basic gesture detection to allow you to delete commands while in command mode. This is in particular useful when you do not use hotkeys. Often I find myself in the situation that I miss placed a build order. When you do not use hotkeys, this looks like:
-
-- (0) Miss click a build order.
-- (1) Right click to cancel command mode.
-- (2) Right click to remove the build order.
-- (3) Move mouse to the correct build icon and left-click it.
-
-In particular, step 3 can be time consuming. With this feature it can be simplified to:
-
-- (0) Miss click a build order.
-- (1) Rage-move the mouse across the build order until it disappears.
-
-And problem solved. See it also in action:
-
-https://github.com/user-attachments/assets/687aceb0-7522-4172-bbbe-106da39a7c5d
+This UI mods adds hotkeys that you can use to have cinematic-level control over your camera. Please review the [Configuration file](./src/Config.lua) to understand what hotkeys are applied. 
 
 ## Related repositories
 

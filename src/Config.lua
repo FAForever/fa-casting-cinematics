@@ -112,26 +112,27 @@ local Keys = {
 --- Some sanity checks on when (not) to apply the hotkeys.
 ---@return boolean
 function ShouldApplyKeys()
-    -- session is in sandbox mode
+    -- Session is in sandbox mode, enable the hotkeys
     if SessionGetScenarioInfo().options.Victory == 'sandbox' then
         return true
     end
 
-    -- Session is a replay
+    -- Session is a replay, apply the hotkeys
     if SessionIsReplay() then
         return true
     end
 
-    -- Session has only one command source
+    -- Session has only one command source, apply the hotkeys
     if table.getn(SessionGetCommandSourceNames()) == 1 then
         return true
     end
 
-    -- User is an observer
+    -- User is an observer, apply the hotkeys
     if GetFocusArmy() == -1 then
         return true
     end
 
+    -- do not apply the hotkeys
     return false
 end
 

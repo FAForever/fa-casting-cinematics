@@ -1,8 +1,8 @@
-name = "Prototype of camera casting"
-uid = "fa-prototype-camera-casting"
+name = "Cinematics - Live Camera Control"
+uid = "fa-casting-cinematics-01"
 icon = "/mods/fa-casting-cinematics/icon.png"
 version = 1
-description = "A prototype to give casters a more natural control over the camera when they are in split screen."
+description = "A UI mod to provide casters a more natural control over the camera. Please review the configuration file to understand the hotkey layout."
 author = "Jip"
 license = "MIT"
 exclusive = false
