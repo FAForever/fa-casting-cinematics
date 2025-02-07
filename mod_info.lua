@@ -1,8 +1,8 @@
-name = "Gesture to delete engineering commands"
-uid = "fa-gesture-delete-command-01"
-icon = "/mods/fa-gesture-delete-command/icon.png"
+name = "Prototype of camera casting"
+uid = "fa-prototype-camera-casting"
+icon = "/mods/fa-casting-cinematics/icon.png"
 version = 1
-description = "Sometimes you are in the middle of a sequence of commands and there it is - a miss click. How human of us. With this UI mod you can aggressively swipe back and forth across the wrong command to make it disappear again. No need anymore to exit command mode to fix your mistake to continue the sequence."
+description = "A prototype to give casters a more natural control over the camera when they are in split screen."
 author = "Jip"
 license = "MIT"
 exclusive = false
