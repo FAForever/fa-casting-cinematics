@@ -3,6 +3,7 @@ uid = "fa-casting-cinematics-01"
 icon = "/mods/fa-casting-cinematics/icon.png"
 version = 1
 description = "A UI mod to provide casters a more natural control over the camera. Please review the configuration file to understand the hotkey layout."
+url = "https://github.com/FAForever/fa-casting-cinematics"
 author = "Jip"
 license = "MIT"
 exclusive = false
