@@ -57,6 +57,7 @@ CreateTemporaryDecal = function(position, path, scale, duration)
     ForkThread(
         function()
             while current - duration < start do
+                current = GetSystemTimeSeconds()
                 WaitFrames(1)
             end
 
@@ -146,8 +147,6 @@ AnimateScaleAtUserUnit = function(decal, userUnit, scale, duration)
                 current = GetSystemTimeSeconds()
                 WaitFrames(1)
             end
-
-            decal:Destroy()
         end
     )
 
