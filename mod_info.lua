@@ -1,7 +1,7 @@
 name = "Cinematics - Live Camera Control"
-uid = "fa-casting-cinematics-01"
+uid = "fa-casting-cinematics-02"
 icon = "/mods/fa-casting-cinematics/icon.png"
-version = 1
+version = 2
 description = "A UI mod to provide casters a more natural control over the camera. Please review the configuration file to understand the hotkey layout."
 url = "https://github.com/FAForever/fa-casting-cinematics"
 author = "Jip"
