@@ -129,7 +129,7 @@ AnimateScaleAtUserUnit = function(decal, userUnit, scale, duration)
     local fork = ForkThread(
     -- fade-out-like animation
         function()
-            while not IsDestroyed(decal) and current - duration < start do
+            while not IsDestroyed(decal) and not IsDestroyed(userUnit) and current - duration < start do
                 local diff = (current - start) / duration
                 local altScale = scale * (1 - diff * diff * diff * diff)
 
