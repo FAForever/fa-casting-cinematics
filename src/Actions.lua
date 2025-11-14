@@ -214,7 +214,7 @@ TrackLeft = function(duration)
     duration = duration or 4
 
     local info = GetRolloverInfo()
-    if not info then
+    if not (info and info.userUnit) then
         return
     end
 
@@ -229,7 +229,7 @@ QueueTrackLeft = function(duration)
     duration = duration or 4
 
     local info = GetRolloverInfo()
-    if not info then
+    if not (info and info.userUnit) then
         return
     end
 
@@ -250,7 +250,7 @@ TrackRight = function(duration)
     duration = duration or 4
 
     local info = GetRolloverInfo()
-    if not info then
+    if not (info and info.userUnit) then
         return
     end
 
@@ -265,7 +265,7 @@ QueueTrackRight = function(duration)
     duration = duration or 4
 
     local info = GetRolloverInfo()
-    if not info then
+    if not (info and info.userUnit) then
         return
     end
 
@@ -414,6 +414,157 @@ SnapToRight = function(duration)
     local worldview = WorldViewManager.viewLeft or WorldViewManager.viewRight --[[@as WorldView]]
     local worldCoordinates = GetMouseWorldPos()
     SnapTo(worldview, worldCoordinates, duration)
+end
+
+--- Snaps the world view to the world coordinates.
+---@param worldview WorldView
+---@param userUnit UserUnit
+---@param duration number
+Target = function(worldview, userUnit, duration)
+    local camera = GetCameraOfWorldview(worldview)
+    local cameraSettings = camera:SaveSettings()
+    camera:TargetEntities({ userUnit:GetEntityId() }, cameraSettings.Zoom, duration)
+
+    if Config.CreateUserFeedback then
+        -- help the user understand what is happening
+        local userDecalScale = 20
+        local userDecalTexture = "/textures/selection_bracket_player_sm.dds"
+        local userDecal = CreateTemporaryDecal(
+            userUnit:GetPosition(),
+            userDecalTexture,
+            userDecalScale,
+            duration
+        )
+        AnimateScaleAtUserUnit(userDecal, userUnit, userDecalScale, duration)
+    end
+end
+
+--- Applies the `Target` functionality to the left world view using the unit that the mouse is hovering over.
+TargetLeft = function(duration)
+    duration = duration or 4
+
+    local info = GetRolloverInfo()
+    if not (info and info.userUnit) then
+        return
+    end
+
+    local WorldViewManager = import("/lua/ui/game/worldview.lua")
+    local worldview = WorldViewManager.viewLeft or WorldViewManager.viewRight --[[@as WorldView]]
+
+    Target(worldview, info.userUnit, duration)
+end
+
+--- Applies the `Target` functionality to the right world view using the unit that the mouse is hovering over.
+TargetRight = function(duration)
+    duration = duration or 4
+
+    local info = GetRolloverInfo()
+    if not (info and info.userUnit) then
+        return
+    end
+
+    local WorldViewManager = import("/lua/ui/game/worldview.lua")
+    local worldview = WorldViewManager.viewRight or WorldViewManager.viewLeft --[[@as WorldView]]
+
+    Target(worldview, info.userUnit, duration)
+end
+
+--- Pans the camera into the direction of where the mouse.
+Pan = function(duration)
+    duration = duration or 4
+
+    local mouseCoordinates = GetMouseScreenPos()
+    local mouseX = mouseCoordinates[1]
+    local mouseZ = mouseCoordinates[2]
+
+    local WorldViewManager = import("/lua/ui/game/worldview.lua")
+    local worldview = WorldViewManager.GetTopmostWorldViewAt(mouseX, mouseZ)
+
+    local top = worldview:Top()
+    local left = worldview:Left()
+    local width = worldview:Width()
+    local height = worldview:Height()
+
+    local directionX = (mouseX - left - 0.5 * width) / (0.5 * width)
+    local directionZ = (mouseZ - top - 0.5 * height) / (0.5 * height)
+
+    local camera = GetCameraOfWorldview(worldview)
+    local source = camera:SaveSettings()
+    local heading = -1 * (source.Heading - math.pi)
+
+    -- rotate input vector by camera heading
+    local cosH = math.cos(heading)
+    local sinH = math.sin(heading)
+
+    local worldDX = directionX * cosH - directionZ * sinH
+    local worldDZ = directionX * sinH + directionZ * cosH
+
+    local scale = 10
+    local target = {
+        source.Focus.x + worldDX * scale,
+        source.Focus.y,
+        source.Focus.z + worldDZ * scale,
+    }
+
+    camera:MoveTo(target, { source.Heading, source.Pitch, 0 }, source.Zoom, duration)
+end
+
+--- Spins the camera.
+Spin = function(worldView, direction, zoom)
+    local mouseCoordinates = GetMouseScreenPos()
+    local mouseZ = mouseCoordinates[2]
+
+    local top = worldView:Top()
+    local height = worldView:Height()
+    local directionZ = (mouseZ - top - 0.5 * height) / (0.5 * height)
+
+    local camera = GetCameraOfWorldview(worldView)
+    camera:HoldRotation()
+    camera:Spin(0.02 * direction, 2 * directionZ)
+end
+
+--- Spins the camera to the left.
+SpinLeft = function()
+    local WorldViewManager = import("/lua/ui/game/worldview.lua")
+    local worldview = WorldViewManager.viewLeft or WorldViewManager.viewRight --[[@as WorldView]]
+
+    Spin(worldview, 1)
+end
+
+--- Spins the camera to the right.
+SpinRight = function()
+    local WorldViewManager = import("/lua/ui/game/worldview.lua")
+    local worldview = WorldViewManager.viewRight or WorldViewManager.viewLeft --[[@as WorldView]]
+
+    Spin(worldview, -1)
+end
+
+--- Stops the camera moving, in particular the `MoveTo` functionality.
+Stop = function()
+    local mouseCoordinates = GetMouseScreenPos()
+    local WorldViewManager = import("/lua/ui/game/worldview.lua")
+    local worldview = WorldViewManager.GetTopmostWorldViewAt(mouseCoordinates[1], mouseCoordinates[2])
+    local camera = GetCameraOfWorldview(worldview)
+
+    -- restore camera settings
+    local source = camera:SaveSettings()
+    camera:HoldRotation()
+    camera:Spin(0, 0)
+    camera:MoveTo(source.Focus, { source.Heading, source.Pitch, 0 }, source.Zoom, 0.1)
+end
+
+--- Resets the camera in a smooth manner.
+Reset = function()
+    local mouseCoordinates = GetMouseScreenPos()
+    local WorldViewManager = import("/lua/ui/game/worldview.lua")
+    local worldview = WorldViewManager.GetTopmostWorldViewAt(mouseCoordinates[1], mouseCoordinates[2])
+    local camera = GetCameraOfWorldview(worldview)
+
+    -- restore camera settings
+    local source = camera:SaveSettings()
+    camera:HoldRotation()
+    camera:Spin(0, 0)
+    camera:MoveTo(source.Focus, { 3.14159, (1 - 20 / 90) * 1.5708, 0 }, source.Zoom, 2.0)
 end
 
 -------------------------------------------------------------------------------

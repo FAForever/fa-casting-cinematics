@@ -69,15 +69,51 @@ local Keys = {
         category = 'camera'
     },
 
-    ['Z'] = {
+    ['Ctrl-A'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").TargetLeft()',
+        category = 'camera'
+    },
+
+    ['Ctrl-B'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").TargetRight()',
+        category = 'camera'
+    },
+
+    ['Ctrl-Q'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SnapToLeft()',
         category = 'camera'
     },
 
-    ['C'] = {
+    ['Ctrl-e'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SnapToRight()',
         category = 'camera'
     },
+
+    ['Z'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SpinLeft()',
+        category = 'camera'
+    },
+
+    ['C'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SpinRight()',
+        category = 'camera'
+    },
+
+    ['W'] = { -- uses the mouse position on screen as input. 
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").Pan()',
+        category = 'camera'
+    },
+
+    ['S'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").Stop()',
+        category = 'camera'
+    },
+
+    ['X'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").Reset()',
+        category = 'camera'
+    },
+
 
     -- camera smoothing (interpolation)
 
