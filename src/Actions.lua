@@ -158,11 +158,6 @@ end
 SetAccelerationMode = function(mode)
     local WorldViewManager = import("/lua/ui/game/worldview.lua")
 
-    if not (WorldViewManager.viewLeft and WorldViewManager.viewRight) then
-        print("Requires split screen, aborting")
-        return
-    end
-
     -- determine what worldview has our focus
     local mouseCoordinates = GetMouseScreenPos()
     local worldViewFocus = WorldViewManager.GetTopmostWorldViewAt(mouseCoordinates[1], mouseCoordinates[2])
