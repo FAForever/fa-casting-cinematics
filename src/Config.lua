@@ -89,18 +89,13 @@ local Keys = {
         category = 'camera'
     },
 
-    ['Z'] = {
-        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SpinLeft()',
-        category = 'camera'
-    },
-
-    ['C'] = {
-        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SpinRight()',
-        category = 'camera'
-    },
-
     ['W'] = { -- uses the mouse position on screen as input. 
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").Pan()',
+        category = 'camera'
+    },
+
+    ['Ctrl-W'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").Spin()',
         category = 'camera'
     },
 

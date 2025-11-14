@@ -471,7 +471,7 @@ end
 
 --- Pans the camera into the direction of where the mouse.
 Pan = function(duration)
-    duration = duration or 40
+    duration = duration or 10
 
     local mouseCoordinates = GetMouseScreenPos()
     local mouseX = mouseCoordinates[1]
@@ -506,37 +506,31 @@ Pan = function(duration)
         source.Focus.z + worldDZ * scale,
     }
 
+    camera:HoldRotation()
+    camera:Spin(0, 0)
     camera:MoveTo(target, { source.Heading, source.Pitch, 0 }, source.Zoom, duration)
 end
 
 --- Spins the camera.
-Spin = function(worldView, direction, zoom)
+Spin = function()
     local mouseCoordinates = GetMouseScreenPos()
+    local mouseX = mouseCoordinates[1]
     local mouseZ = mouseCoordinates[2]
 
-    local top = worldView:Top()
-    local height = worldView:Height()
+    local WorldViewManager = import("/lua/ui/game/worldview.lua")
+    local worldview = WorldViewManager.GetTopmostWorldViewAt(mouseX, mouseZ)
+
+    local top = worldview:Top()
+    local left = worldview:Left()
+    local width = worldview:Width()
+    local height = worldview:Height()
+
+    local directionX = (mouseX - left - 0.5 * width) / (0.5 * width)
     local directionZ = (mouseZ - top - 0.5 * height) / (0.5 * height)
 
-    local camera = GetCameraOfWorldview(worldView)
+    local camera = GetCameraOfWorldview(worldview)
     camera:HoldRotation()
-    camera:Spin(0.02 * direction, 2 * directionZ)
-end
-
---- Spins the camera to the left.
-SpinLeft = function()
-    local WorldViewManager = import("/lua/ui/game/worldview.lua")
-    local worldview = WorldViewManager.viewLeft or WorldViewManager.viewRight --[[@as WorldView]]
-
-    Spin(worldview, 1)
-end
-
---- Spins the camera to the right.
-SpinRight = function()
-    local WorldViewManager = import("/lua/ui/game/worldview.lua")
-    local worldview = WorldViewManager.viewRight or WorldViewManager.viewLeft --[[@as WorldView]]
-
-    Spin(worldview, -1)
+    camera:Spin(5 * 0.02 * directionX, 5 * 2 * directionZ)
 end
 
 --- Stops the camera moving, in particular the `MoveTo` functionality.
