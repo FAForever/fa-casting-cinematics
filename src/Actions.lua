@@ -471,7 +471,7 @@ end
 
 --- Pans the camera into the direction of where the mouse.
 Pan = function(duration)
-    duration = duration or 4
+    duration = duration or 40
 
     local mouseCoordinates = GetMouseScreenPos()
     local mouseX = mouseCoordinates[1]
@@ -499,7 +499,7 @@ Pan = function(duration)
     local worldDX = directionX * cosH - directionZ * sinH
     local worldDZ = directionX * sinH + directionZ * cosH
 
-    local scale = 10
+    local scale = duration * 2.5
     local target = {
         source.Focus.x + worldDX * scale,
         source.Focus.y,
