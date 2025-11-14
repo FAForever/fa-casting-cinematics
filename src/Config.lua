@@ -29,12 +29,12 @@ local Keys = {
 
     -- main interactions
 
-    ['W'] = {
+    ['Q'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").MoveToLeft()',
         category = 'camera'
     },
 
-    ['SHIFT-W'] = {
+    ['Shift-Q'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").QueueMoveToLeft()',
         category = 'camera'
     },
@@ -44,17 +44,17 @@ local Keys = {
         category = 'camera'
     },
 
-    ['SHIFT-E'] = {
+    ['Shift-E'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").QueueMoveToRight()',
         category = 'camera'
     },
 
-    ['S'] = {
+    ['A'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").TrackLeft()',
         category = 'camera'
     },
 
-    ['Shift-S'] = {
+    ['Shift-A'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").QueueTrackLeft()',
         category = 'camera'
     },
@@ -69,7 +69,7 @@ local Keys = {
         category = 'camera'
     },
 
-    ['X'] = {
+    ['Z'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SnapToLeft()',
         category = 'camera'
     },
@@ -81,29 +81,29 @@ local Keys = {
 
     -- camera smoothing (interpolation)
 
-    ['Q'] = {
+    ['1'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SetAccelerationMode("Linear")',
         category = 'camera'
     },
 
-    ['A'] = {
+    ['2'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SetAccelerationMode("FastInSlowOut")',
         category = 'camera'
     },
 
-    ['Z'] = {
+    ['3'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SetAccelerationMode("SlowInOut")',
         category = 'camera'
     },
 
     -- lock/unlock input
 
-    ['CTRl-Q'] = {
+    ['Ctrl-1'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").LockInput()',
         category = 'camera'
     },
 
-    ['CTRL-D'] = {
+    ['Ctrl-2'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").UnlockInput()',
         category = 'camera'
     },
