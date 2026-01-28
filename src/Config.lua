@@ -23,8 +23,11 @@
 --
 --*******************************************************************************
 
+-- If true, print all actions. Useful for showing how the ui mod works
 PrintAllActions = false
-CreateUserFeedback = true -- change true to false to turn off feedback
+
+-- If true, create user feedback (square decals)
+CreateUserFeedback = true
 
 local Keys = {
 
@@ -85,7 +88,7 @@ local Keys = {
         category = 'camera'
     },
 
-    ['Ctrl-e'] = {
+    ['Ctrl-E'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").SnapToRight()',
         category = 'camera'
     },
