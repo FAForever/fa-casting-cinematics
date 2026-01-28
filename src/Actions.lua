@@ -25,8 +25,6 @@
 
 local Config = import("/mods/fa-casting-cinematics/src/Config.lua")
 
-
-
 --- Utility function to retrieve the camera of a world view
 ---@param worldview WorldView
 local function GetCameraOfWorldview(worldview)
@@ -186,6 +184,10 @@ LockInput = function()
     local mouseCoordinates = GetMouseScreenPos()
     local worldViewFocus = WorldViewManager.GetTopmostWorldViewAt(mouseCoordinates[1], mouseCoordinates[2])
     worldViewFocus:LockInput(GetCameraOfWorldview(worldViewFocus))
+
+    if Config.PrintAllActions then
+        print("LockInput")
+    end
 end
 
 --- Unlocks the input of a world view.
@@ -195,6 +197,10 @@ UnlockInput = function()
     local mouseCoordinates = GetMouseScreenPos()
     local worldViewFocus = WorldViewManager.GetTopmostWorldViewAt(mouseCoordinates[1], mouseCoordinates[2])
     worldViewFocus:UnlockInput()
+
+    if Config.PrintAllActions then
+        print("UnlockInput")
+    end
 end
 
 --- Gradually moves the world view to the target entity and then proceeds to track it.
@@ -219,6 +225,10 @@ Track = function(worldview, userUnit, duration)
 
     -- reset all effects
     AdditionalEffects = {}
+
+    if Config.PrintAllActions then
+        print("Track")
+    end
 end
 
 --- Applies the `Track` functionality to the left world view using the unit that the mouse is hovering over.
@@ -317,6 +327,10 @@ MoveTo = function(worldview, worldCoordinates, duration)
 
     -- reset all effects
     AdditionalEffects = {}
+
+    if Config.PrintAllActions then
+        print("MoveTo")
+    end
 end
 
 --- Applies the `MoveTo` functionality to the left world view using the world coordinates of the mouse.
@@ -410,6 +424,10 @@ SnapTo = function(worldview, worldCoordinates, duration)
 
     -- reset all effects
     AdditionalEffects = {}
+
+    if Config.PrintAllActions then
+        print("SnapTo")
+    end
 end
 
 --- Applies the `SnapTo` functionality to the left world view using the world coordinates of the mouse.
@@ -461,6 +479,11 @@ Target = function(worldview, userUnit, duration)
 
     -- reset all effects
     AdditionalEffects = {}
+
+
+    if Config.PrintAllActions then
+        print("Target")
+    end
 end
 
 --- Applies the `Target` functionality to the left world view using the unit that the mouse is hovering over.
@@ -533,6 +556,10 @@ Pan = function(duration)
     camera:HoldRotation()
     camera:Spin(0, 0)
     camera:MoveTo(target, { source.Heading, source.Pitch, 0 }, source.Zoom, duration)
+
+    if Config.PrintAllActions then
+        print("Pan")
+    end
 end
 
 --- Spins the camera.
@@ -555,6 +582,10 @@ Spin = function()
     local camera = GetCameraOfWorldview(worldview)
     camera:HoldRotation()
     camera:Spin(5 * 0.02 * directionX, 5 * 2 * directionZ)
+
+    if Config.PrintAllActions then
+        print("Spin")
+    end
 end
 
 --- Stops the camera moving, in particular the `MoveTo` functionality.
@@ -569,6 +600,10 @@ Stop = function()
     camera:HoldRotation()
     camera:Spin(0, 0)
     camera:MoveTo(source.Focus, { source.Heading, source.Pitch, 0 }, source.Zoom, 0.1)
+
+    if Config.PrintAllActions then
+        print("Stop")
+    end
 end
 
 --- Resets the camera in a smooth manner.
@@ -586,6 +621,10 @@ Reset = function()
 
     -- reset all effects
     AdditionalEffects = {}
+
+    if Config.PrintAllActions then
+        print("Reset")
+    end
 end
 
 -------------------------------------------------------------------------------

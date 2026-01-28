@@ -23,6 +23,7 @@
 --
 --*******************************************************************************
 
+PrintAllActions = false
 CreateUserFeedback = true -- change true to false to turn off feedback
 
 local Keys = {
