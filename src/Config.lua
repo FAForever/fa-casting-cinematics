@@ -104,11 +104,32 @@ local Keys = {
         category = 'camera'
     },
 
-    ['X'] = {
+    ['Ctrl-S'] = {
         action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").Reset()',
         category = 'camera'
     },
 
+    -- additional effects
+
+    ['Z'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").AddZoomEffect(100)',
+        category = 'camera'
+    },
+
+    ['X'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").AddZoomEffect(220)',
+        category = 'camera'
+    },
+
+    ['C'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").AddZoomEffect(340)',
+        category = 'camera'
+    },
+
+    ['V'] = {
+        action = 'UI_Lua import("/mods/fa-casting-cinematics/src/Actions.lua").AddZoomEffect(460)',
+        category = 'camera'
+    },
 
     -- camera smoothing (interpolation)
 

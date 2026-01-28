@@ -25,6 +25,8 @@
 
 local Config = import("/mods/fa-casting-cinematics/src/Config.lua")
 
+
+
 --- Utility function to retrieve the camera of a world view
 ---@param worldview WorldView
 local function GetCameraOfWorldview(worldview)
@@ -37,6 +39,12 @@ end
 local function GetCameraPitch(zoom)
     return (1 - 20 / zoom) * 1.5708
 end
+
+---@class AdditionalEffectsConfiguration
+---@field ZoomTo number | nil   # The target zoom height for the camera. If set to nil, do not change zoom.
+local AdditionalEffects = {
+    ZoomTo = nil,
+}
 
 --- Creates a decal to assist the viewer in understanding what is happening.
 ---@param position Vector
@@ -193,7 +201,8 @@ end
 Track = function(worldview, userUnit, duration)
     local camera = GetCameraOfWorldview(worldview)
     local cameraSettings = camera:SaveSettings()
-    camera:TrackEntities({ userUnit:GetEntityId() }, cameraSettings.Zoom, duration)
+    local targetZoom = AdditionalEffects.ZoomTo or cameraSettings.Zoom
+    camera:TrackEntities({ userUnit:GetEntityId() }, targetZoom, duration)
 
     if Config.CreateUserFeedback then
         -- help the user understand what is happening
@@ -207,6 +216,9 @@ Track = function(worldview, userUnit, duration)
         )
         AnimateScaleAtUserUnit(userDecal, userUnit, userDecalScale, duration)
     end
+
+    -- reset all effects
+    AdditionalEffects = {}
 end
 
 --- Applies the `Track` functionality to the left world view using the unit that the mouse is hovering over.
@@ -288,7 +300,8 @@ end
 MoveTo = function(worldview, worldCoordinates, duration)
     local camera = GetCameraOfWorldview(worldview)
     local cameraSettings = camera:SaveSettings()
-    camera:MoveTo(worldCoordinates, { cameraSettings.Heading, cameraSettings.Pitch, 0 }, cameraSettings.Zoom, duration)
+    local targetZoom = AdditionalEffects.ZoomTo or cameraSettings.Zoom
+    camera:MoveTo(worldCoordinates, { cameraSettings.Heading, cameraSettings.Pitch, 0 }, targetZoom, duration)
 
     if Config.CreateUserFeedback then
         -- help the user understand what is happening
@@ -301,6 +314,9 @@ MoveTo = function(worldview, worldCoordinates, duration)
         )
         AnimateScaleAtPosition(userDecal, worldCoordinates, userDecalScale, duration)
     end
+
+    -- reset all effects
+    AdditionalEffects = {}
 end
 
 --- Applies the `MoveTo` functionality to the left world view using the world coordinates of the mouse.
@@ -377,7 +393,8 @@ end
 SnapTo = function(worldview, worldCoordinates, duration)
     local camera = GetCameraOfWorldview(worldview)
     local cameraSettings = camera:SaveSettings()
-    camera:SnapTo(worldCoordinates, { cameraSettings.Heading, cameraSettings.Pitch, 0 }, cameraSettings.Zoom)
+    local targetZoom = AdditionalEffects.ZoomTo or cameraSettings.Zoom
+    camera:SnapTo(worldCoordinates, { cameraSettings.Heading, cameraSettings.Pitch, 0 }, targetZoom)
 
     if Config.CreateUserFeedback then
         -- help the user understand what is happening
@@ -390,6 +407,9 @@ SnapTo = function(worldview, worldCoordinates, duration)
         )
         AnimateScaleAtPosition(userDecal, worldCoordinates, userDecalScale, duration)
     end
+
+    -- reset all effects
+    AdditionalEffects = {}
 end
 
 --- Applies the `SnapTo` functionality to the left world view using the world coordinates of the mouse.
@@ -423,7 +443,8 @@ end
 Target = function(worldview, userUnit, duration)
     local camera = GetCameraOfWorldview(worldview)
     local cameraSettings = camera:SaveSettings()
-    camera:TargetEntities({ userUnit:GetEntityId() }, cameraSettings.Zoom, duration)
+    local targetZoom = AdditionalEffects.ZoomTo or cameraSettings.Zoom
+    camera:TargetEntities({ userUnit:GetEntityId() }, targetZoom, duration)
 
     if Config.CreateUserFeedback then
         -- help the user understand what is happening
@@ -437,6 +458,9 @@ Target = function(worldview, userUnit, duration)
         )
         AnimateScaleAtUserUnit(userDecal, userUnit, userDecalScale, duration)
     end
+
+    -- reset all effects
+    AdditionalEffects = {}
 end
 
 --- Applies the `Target` functionality to the left world view using the unit that the mouse is hovering over.
@@ -559,7 +583,21 @@ Reset = function()
     camera:HoldRotation()
     camera:Spin(0, 0)
     camera:MoveTo(source.Focus, { 3.14159, (1 - 20 / 90) * 1.5708, 0 }, source.Zoom, 2.0)
+
+    -- reset all effects
+    AdditionalEffects = {}
 end
+
+-------------------------------------------------------------------------------
+--#region Additional camera effects
+
+AddZoomEffect = function(zoom)
+    AdditionalEffects.ZoomTo = zoom
+
+    print("Target zoom set to: " .. tostring(zoom))
+end
+
+--#endregion
 
 -------------------------------------------------------------------------------
 --#region Debugging
